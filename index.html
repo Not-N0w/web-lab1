@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table class = "main-table">
+        <tr>
+            <th colspan=2>
+                <header>
+                    <div class = "wrapper">
+                        <div class = "header-content">
+                            <div>
+                                <h1 class="title">
+                                    lab1<span> (var.466595)</span>
+                                </h1>
+                            </div>
+                            <div class="me-info">
+                                <h3 class="name">Макогон Ярослав</h3>
+                                <h4 class="group">P3118</h4>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </th>
+        </tr>
+        <tr class="top-content-line">
+            <td>
+                <div class="coordinate-plate-outer">
+                    <canvas id="canvas"></canvas>
+                    <div id = "tooltip" class = "hidden"></div>
+                </div>
+            </td>
+            <td>
+                <div class="hit-from-wrapper">
+                    <form id="hit-form">
+                        <h2>HIT</h2>
+                        <div class = "form-content-wrapper">
+                        <div class = "input-block">
+                        <div class="input-wrapper">
+                            <label for="radius">R:</label>
+                            <div>
+                                <input type="range" id="r-range-input" value="1" min="1" max="10"/>
+                                <input type="text" id="r-input" value="1">
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div>X:</div>
+                            <div class = "checkbox-line">
+                                <div class="check-point">
+                                <label for="x-input-n3">-3</label>
+                                <input type="checkbox" id="x-input-n3" value="-3" name="x-coordinate">
+                                </div>
+                                <div class="check-point">
+                                <label for="x-input-n2">-2</label>
+                                <input type="checkbox" id="x-input-n2" value="-2" name="x-coordinate">
+                                </div>
+                                <div class="check-point">
+                                <label for="x-input-n1">-1</label>
+                                <input type="checkbox" id="x-input-n1" value="-1" name="x-coordinate">
+                                </div>
+                                <div class="check-point">
+                                <label for="x-input-0">0</label>
+                                <input type="checkbox" id="x-input-0" value="0" name="x-coordinate">
+                                </div>
+                                <div class="check-point">
+                                <label for="x-input-1">1</label>
+                                <input type="checkbox" id="x-input-1" value="1" name="x-coordinate">
+                                </div>
+                                <div class="check-point">
+                                <label for="x-input-2">2</label>
+                                <input type="checkbox" id="x-input-2" value="2" name="x-coordinate">
+                                </div>
+                                <div class="check-point">
+                                <label for="x-input-3">3</label>
+                                <input type="checkbox" id="x-input-3" value="3" name="x-coordinate">
+                                </div>
+                                <div id ="bg-selector"></div>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="y-range-input">Y:</label>
+                            <div>
+                                <input type="range" id="y-range-input" value="0" step="0.1"/>
+                                <input type="text" id="y-input" value="0" step="0.1">
+                            </div>
+                        </div>
+                        </div>
+                         <div class ="input-wrapper">
+                              <input type="submit" value="HIT!" id="hit-button">
+                        </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table class = "history-table" id="hits-table">
+                    <th>R</th>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Hit?</th>
+                    <th>Execution time</th>
+                    <th>Current time</th>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    <div id="dialog-window" class="hidden">
+        <div class="content">
+            <h1 id="dialog-window-type">ERROR</h1>
+            <p id="dialog-window-text">ERROR</p>
+            <button id="got-it" onClick="hideDialog()">Got it!</button>
+        </div>
+    </div>
+
+  <script src="script.js"></script>
+  <script src="graphics.js"></script>
+  <script src="hits.js"></script>
+</body>
+</html>
