@@ -9,4 +9,9 @@ public class Point {
     private Float x;
     private Float y;
     private boolean isHit;
+
+    @Override
+    public String toString() {
+        return String.format("{\"x\": %s, \"y\": %s, \"isHit\": %s}", x, y, isHit);
+    }
 }

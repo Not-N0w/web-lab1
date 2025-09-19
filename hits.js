@@ -1,6 +1,7 @@
 var hitForm = document.getElementById("hit-form");
 var hitsTable = document.getElementById("hits-table");
 var hits = [];
+const POST_URL = "web-lab1.test/test.fcgi"
 
 
 function updateHitsTable() {
@@ -20,6 +21,7 @@ function processResponse(response) {
         dropDialog("error", response.message);
         return;
     }
+    hits = []
     for (let i = 0; i < response.points.length; i++) {
         const point = response.points[i];
         hits.push(

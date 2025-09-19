@@ -312,8 +312,12 @@ header .header-content .title>span {
 
 .history-table {
     width: 100%;
-     table-layout: fixed;
-  border-collapse: collapse;
+    table-layout: fixed;
+    border-collapse: collapse;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -326,17 +330,47 @@ header .header-content .title>span {
 
 .history-table tr {
     width: 33.33%;
-    border-bottom: 1px solid var(--color-bright-red);
-
+        height: 40px;
 }
+
+.history-table th {
+    color: var(--color-light);
+    font-weight: 300;
+    font-size: 15px;
+    
+}
+
+
+.history-table tr {
+    background-color: var(--color-dark);
+        transition: 0.1s ease-in-out;
+}
+.history-table tr:hover {
+    background-color: color-mix(in hsl, var(--color-dark), #ffffff 10%);
+    cursor: pointer;
+}
+.history-table .head {
+    border-bottom: 2px solid var(--color-bright-red);
+}
+.history-table .head:hover {
+    border-bottom: 2px solid var(--color-bright-red) !important;
+    background-color: transparent;
+    cursor: default;
+}
+.history-table .head th{
+    color: var(--color-light);
+    font-weight: 800;
+    font-size: 18px;
+}
+
 
 #dialog-window.hidden {
     opacity: 0;
     visibility: hidden;
 }
 #dialog-window {
-    display: block;
-    position: absolute;
+    display:block;
+    position: fixed;
     width: 30%;
     padding: 30px 0;
     background-color: #0d0d0fda;
@@ -349,8 +383,24 @@ header .header-content .title>span {
     -moz-box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
     transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 101; 
 
 }
+#dialog-window + .blocker{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0, 0, 0, 0.5);
+    display: block;             
+    z-index: 100; 
+}
+
+#dialog-window.hidden + .blocker{
+    display: none;             
+}
+
 #dialog-window .content {
     width: 90%;
     display: flex;

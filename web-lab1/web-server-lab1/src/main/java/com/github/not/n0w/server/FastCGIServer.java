@@ -107,11 +107,9 @@ public class FastCGIServer {
             Response response = processRequest();
             if(response == null) { return; }
 
-            System.out.printf(
-                    "Content-type: application/json; charset=UTF-8%n%s%n",
-                    response.toString()
-            );
-
+            System.out.println("Content-Type: application/json; charset=UTF-8");
+            System.out.println();
+            System.out.println(response.toString());
         }
     }
 

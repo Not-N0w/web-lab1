@@ -17,7 +17,7 @@ public class Response {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        sb.append("\"status\": ").append("ok");
+        sb.append("\"status\": \"ok\", "); // <-- кавычки и запятая
         sb.append("\"points\": [");
         if (points != null) {
             for (int i = 0; i < points.size(); i++) {

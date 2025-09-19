@@ -1,7 +1,6 @@
 const rUpperBound = 10;
 const rLowerBound = 1;
 const imagePartRatio = 0.7;
-const POST_URL = "web-lab1.test/test.fcgi"
 
 var rRangeInput = document.getElementById("r-range-input");
 var yRangeInput = document.getElementById("y-range-input");
