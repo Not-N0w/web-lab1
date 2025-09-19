@@ -52,8 +52,8 @@ public class FastCGIServer {
         var startTime = System.nanoTime();
         var contentType = FCGIInterface.request.params.getProperty("CONTENT_TYPE");
 
-        if (!contentType.equals("application/x-www-form-urlencoded")) {
-            dropError("Content-Type is not application/x-www-form-urlencoded");
+        if (contentType == null || !contentType.equals("application/x-www-form-urlencoded")) {
+            dropError("Content-Type is not applicsation/x-www-form-urlencoded");
             return null;
         }
         String input;
@@ -107,9 +107,7 @@ public class FastCGIServer {
             Response response = processRequest();
             if(response == null) { return; }
 
-            System.out.println("Content-Type: application/json; charset=UTF-8");
-            System.out.println();
-            System.out.println(response.toString());
+            System.out.println("Content-Type: application/json; charset=UTF-8\n\n" +response.toString());
         }
     }
 

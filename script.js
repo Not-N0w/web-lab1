@@ -23,8 +23,8 @@ function roundToTenth(value) {
 }
 
 function updateCoordsRestrictions() {
-    coordinateLowerBound = roundToTenth(-window.globalR * (1/imagePartRatio));
-    coordinateUpperBound = roundToTenth(window.globalR * (1/imagePartRatio));
+    coordinateLowerBound = roundToTenth(-window.globalR * (1/imagePartRatio) + 0.1);
+    coordinateUpperBound = roundToTenth(window.globalR * (1/imagePartRatio) -0.1);
 
 
     yRangeInput.max = coordinateUpperBound;
@@ -43,7 +43,7 @@ function updateCoordsRestrictions() {
         window.globalX[i] = (window.globalX[i] >  coordinateUpperBound ? coordinateUpperBound : window.globalX[i]);
     }
 
-    const xValues = [-window.globalR *(1/imagePartRatio), -window.globalR, -window.globalR/2, 0, window.globalR/2, window.globalR, window.globalR * (1/imagePartRatio)]
+    const xValues = [-window.globalR *(1/imagePartRatio) + 0.1, -window.globalR, -window.globalR/2, 0, window.globalR/2, window.globalR, window.globalR * (1/imagePartRatio) - 0.1]
     for(let i = 0; i < xValues.length; ++i) {
         xCheckboxes[i].value = Math.round(xValues[i]*10)/10;
         const label = document.querySelector(`label[for="${xCheckboxes[i].id}"]`);

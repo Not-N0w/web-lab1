@@ -1,7 +1,7 @@
 var hitForm = document.getElementById("hit-form");
 var hitsTable = document.getElementById("hits-table");
 var hits = [];
-const POST_URL = "web-lab1.test/test.fcgi"
+const POST_URL = "/test.fcgi"
 
 
 function updateHitsTable() {

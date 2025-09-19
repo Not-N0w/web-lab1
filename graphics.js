@@ -177,17 +177,18 @@ canvas.addEventListener("mouseleave", (event) => {
     tooltip.classList.add("hidden")
 });
 
-canvas.addEventListener("click", (event) => {
-    ({ x: xHit, y: yHit } = localCanvasPointToVirtual([event.clientX], event.clientY));
+//canvas.addEventListener("click", (event) => {
+//    ({ x: xHit, y: yHit } = localCanvasPointToVirtual([event.clientX], event.clientY));
+//    xHit = xHit.map(el => roundToTenth(el));
     
-    window.globalX = xHit;
-    window.globalY = roundToTenth(yHit);
-    window.dispatchEvent(new CustomEvent('globalCoordinatesChangeByCanvas', {
-        detail: { x: xHit, y: yHit, r: window.globalR } 
-    }));
+//    window.globalX = xHit;
+//    window.globalY = roundToTenth(yHit);
+//    window.dispatchEvent(new CustomEvent('globalCoordinatesChangeByCanvas', {
+//        detail: { x: xHit, y: yHit, r: window.globalR } 
+//    }));
 
-    fillCanvas()
-});
+//    fillCanvas()
+//});
 
 
 window.addEventListener('globalCoordinatesChange', e => {

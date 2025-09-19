@@ -326,24 +326,22 @@ header .header-content .title>span {
     font-weight: 600;
     font-size: 20px;
     width: 33.33%;
+    color: var(--color-light);
 }
 
-.history-table tr {
-    width: 33.33%;
-        height: 40px;
-}
-
-.history-table th {
+.history-table td {
     color: var(--color-light);
     font-weight: 300;
     font-size: 15px;
-    
+    text-align: center;
 }
 
 
 .history-table tr {
     background-color: var(--color-dark);
-        transition: 0.1s ease-in-out;
+    transition: 0.1s ease-in-out;
+    width: 33.33%;
+    height: 40px;
 }
 .history-table tr:hover {
     background-color: color-mix(in hsl, var(--color-dark), #ffffff 10%);
@@ -353,14 +351,8 @@ header .header-content .title>span {
     border-bottom: 2px solid var(--color-bright-red);
 }
 .history-table .head:hover {
-    border-bottom: 2px solid var(--color-bright-red) !important;
     background-color: transparent;
     cursor: default;
-}
-.history-table .head th{
-    color: var(--color-light);
-    font-weight: 800;
-    font-size: 18px;
 }
 
 
