@@ -7,7 +7,8 @@ import com.github.not.n0w.server.model.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,10 @@ public class FastCGIServer {
     }
 
     private void dropError(String message) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"status\": ").append("error");
-        sb.append("\"message\": \"").append(message).append("\"");
-        System.out.println(sb.toString());
+        String sb = "{" +
+                "\"status\": " + "error" +
+                "\"message\": \"" + message + "\"";
+        System.out.println(sb);
         log.error(message);
     }
     private String readInputData() throws IOException {
@@ -53,7 +53,7 @@ public class FastCGIServer {
         var contentType = FCGIInterface.request.params.getProperty("CONTENT_TYPE");
 
         if (contentType == null || !contentType.equals("application/x-www-form-urlencoded")) {
-            dropError("Content-Type is not applicsation/x-www-form-urlencoded");
+            dropError("Content-Type is not application/x-www-form-urlencoded");
             return null;
         }
         String input;
@@ -66,6 +66,7 @@ public class FastCGIServer {
         Request request;
         try {
             request = Request.parse(input);
+            request.selfValidate();
         }
         catch (IllegalArgumentException e) {
             dropError(e.getMessage());
@@ -80,13 +81,16 @@ public class FastCGIServer {
                     FigureProcessor.hit(xCoordinate, request.getY(), request.getR())
             ));
         }
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedNow = now.format(formatter);
 
         var endTime = System.nanoTime();
         Response response = new Response(
                 points,
                 request.getR(),
-                (double) (endTime-startTime),
-                String.valueOf(System.currentTimeMillis())
+                (double) (endTime-startTime)/1_000_000,
+                formattedNow
         );
 
         log.info("Response: \n{}", response.toString());
@@ -107,7 +111,12 @@ public class FastCGIServer {
             Response response = processRequest();
             if(response == null) { return; }
 
-            System.out.println("Content-Type: application/json; charset=UTF-8\n\n" +response.toString());
+            String body = response.toString();
+            System.out.println("HTTP/1.1 200 OK");
+            System.out.println("Content-Type: application/json; charset=UTF-8");
+            System.out.println("Content-Length: " + body.getBytes(StandardCharsets.UTF_8).length);
+            System.out.println();
+            System.out.println(body);
         }
     }
 

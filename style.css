@@ -179,18 +179,6 @@ header .header-content .title>span {
     z-index: 0;
 
 }
-#hit-form #bg-selector  {
-    display: none;
-}
-#hit-form #bg-selector.uneven {
-    display: block;
-    position: absolute;
-    top:0;
-    height: 100%;
-    width: calc(100%/7);
-    background-color: var(--color-bright-red);
-    z-index: 1;
-}
 
 #hit-form .checkbox-line .check-point:last-child {
     border-radius: 0 5px 5px 0;
@@ -207,6 +195,7 @@ header .header-content .title>span {
     flex-direction: column;
     justify-content: center;
     transition: 0.1s ease-in-out;
+    background-color: var(--color-darker);
     z-index: 2;
 
 }
@@ -310,14 +299,104 @@ header .header-content .title>span {
     border-right: 7px solid var(--color-darker);
 }
 
+.history-table-outer {
+    position: relative;
+}
+.history-table-outer #clear-button {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    width: 60px;
+    height: 30px;
+
+    background-color: var(--color-darker);
+    border-radius: 10px 10px 0 0 ;
+    cursor: pointer;
+    outline: none;
+    border: none;
+
+    transition: 0.2s ease-in-out;
+}
+.history-table-outer #clear-button>.image-holder {
+    width: 100%;
+    height: 100%;    
+    background-image: url('img/trash-xmark-svgrepo-com.svg');
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 35%;
+}
+
+
+.history-table-outer #clear-button:hover {
+    top: -40px;
+    height: 40px;
+}
+
+
+.history-table-outer .check-point {
+    position: absolute;
+    top: -30px;
+    right: 60px;
+    width: 60px;
+    height: 30px;
+
+    background-color: var(--color-darker);
+    border-radius: 10px 10px 0 0 ;
+    cursor: pointer;
+    outline: none;
+    border: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition: 0.2s ease-in-out;
+}
+.history-table-outer .check-point label {
+    display: block;
+    height: min-content;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 140%;
+}
+
+.history-table-outer .check-point>input[type="checkbox"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.history-table-outer .check-point:hover {
+    top: -40px;
+    height: 40px;
+}
+
+.history-table-outer .check-point:has(> input[type="checkbox"]:checked) {
+    background-color: var(--color-bright-red);
+}
+
+.history-table-outer #clear-button>.image-holder {
+    width: 100%;
+    height: 100%;    
+    background-image: url('img/trash-xmark-svgrepo-com.svg');
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 35%;
+}
+
+
+
 .history-table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
     overflow: hidden;
-    -webkit-box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px 5px 14px 4px rgba(0, 0, 0, 0.2);
+    background-color: var(--color-darker);
+    border-radius: 10px 0 10px 10px  ;
 }
 
 
@@ -338,7 +417,7 @@ header .header-content .title>span {
 
 
 .history-table tr {
-    background-color: var(--color-dark);
+    background-color: var(--color-darker);
     transition: 0.1s ease-in-out;
     width: 33.33%;
     height: 40px;

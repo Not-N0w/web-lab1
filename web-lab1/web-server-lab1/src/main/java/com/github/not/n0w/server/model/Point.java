@@ -3,11 +3,13 @@ package com.github.not.n0w.server.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @Data
 public class Point {
-    private Float x;
-    private Float y;
+    private BigDecimal x;
+    private BigDecimal y;
     private boolean isHit;
 
     @Override

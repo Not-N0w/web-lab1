@@ -1,6 +1,6 @@
 const rUpperBound = 10;
 const rLowerBound = 1;
-const imagePartRatio = 0.7;
+const imagePartRatio = 0.6;
 
 var rRangeInput = document.getElementById("r-range-input");
 var yRangeInput = document.getElementById("y-range-input");
@@ -14,7 +14,6 @@ var dialogType = document.getElementById("dialog-window-type");
 var dialogText = document.getElementById("dialog-window-text");
 var coordinateUpperBound;
 var coordinateLowerBound;
-var isCustomX = false;
 
 
 
@@ -23,9 +22,8 @@ function roundToTenth(value) {
 }
 
 function updateCoordsRestrictions() {
-    coordinateLowerBound = roundToTenth(-window.globalR * (1/imagePartRatio) + 0.1);
-    coordinateUpperBound = roundToTenth(window.globalR * (1/imagePartRatio) -0.1);
-
+    coordinateLowerBound = roundToTenth(-window.globalR * (1/imagePartRatio - 0.2));
+    coordinateUpperBound = roundToTenth(window.globalR * (1/imagePartRatio - 0.2));
 
     yRangeInput.max = coordinateUpperBound;
     yRangeInput.min = coordinateLowerBound;
@@ -43,20 +41,24 @@ function updateCoordsRestrictions() {
         window.globalX[i] = (window.globalX[i] >  coordinateUpperBound ? coordinateUpperBound : window.globalX[i]);
     }
 
-    const xValues = [-window.globalR *(1/imagePartRatio) + 0.1, -window.globalR, -window.globalR/2, 0, window.globalR/2, window.globalR, window.globalR * (1/imagePartRatio) - 0.1]
+    const xValues = [-window.globalR *1.5, -window.globalR, -window.globalR/2, 0, window.globalR/2, window.globalR, window.globalR * 1.5]
     for(let i = 0; i < xValues.length; ++i) {
         xCheckboxes[i].value = Math.round(xValues[i]*10)/10;
         const label = document.querySelector(`label[for="${xCheckboxes[i].id}"]`);
         label.innerHTML=Math.round(xValues[i]*10)/10;
     }
 }
+function preValidation(value) {
+    return value.replace(/,/g, ".").trim();
+}
 
 function numberValidation(lowerBound, upperBound, value) {
-    if(/[a-zA-Zа-яА-ЯёЁ]/.test(value)) {
-        dropDialog("warning", "Value must contain only numbers! <br>(Changed to 1)");
+    if(!(/^-?(?:\d+|\d*\.\d+)$/.test(value))) {
+        dropDialog("warning", "Invalid number! <br>(Changed to 1)");
         return 1
     }
     if(value > upperBound) {
+        console.log(upperBound)
         dropDialog("warning","Value must be lower than " + upperBound + "!<br>(Changed to " + upperBound + ")");
         return upperBound
     }
@@ -68,9 +70,13 @@ function numberValidation(lowerBound, upperBound, value) {
 }
 
 function updateRadius(value) {
-    var newValue = numberValidation(rLowerBound, rUpperBound, value);
+    var newValue = numberValidation(rLowerBound, rUpperBound, preValidation(value));
+    if(/[.,]/.test(value)) {
+        newValue = Math.round(preValidation(value)) == NaN ? Math.round(preValidation(value)) : 1
+        dropDialog("warning", "Value must be integer! <br>(Changed to "+newValue+")");
+    }
     rInput.value = newValue;   
-    rRangeInput.value= newValue;
+    rRangeInput.value = newValue;
 
     setGlobalHitCoordinates(window.globalX, window.globalY, newValue);
     bgSelector.style.left = (window.globalX[0] / (2*window.globalR *(1/imagePartRatio))) * (100 - 100/7) + (50-50/7)  + "%";
@@ -78,7 +84,8 @@ function updateRadius(value) {
 
 
 function updateYCoordinate(value) {
-    var newValue = numberValidation(coordinateLowerBound, coordinateUpperBound, value);
+    console.log(preValidation(value))
+    var newValue = numberValidation(coordinateLowerBound, coordinateUpperBound, preValidation(value));
     yInput.value = newValue;
     yRangeInput.value = newValue;
     setGlobalHitCoordinates(window.globalX, newValue, window.globalR);
@@ -103,7 +110,7 @@ function getXCoordinates() {
             result.push(cb.value)
         }
     });
-    return (isCustomX ? window.globalX : result);
+    return result;
 }
 function dropDialog(type, message) {
     dialog.classList.add(type);
@@ -122,33 +129,21 @@ function hideDialog() {
 rRangeInput.addEventListener("input", (event) => {
     updateRadius(event.target.value);
 });
-rInput.addEventListener("input", (event) => {
+rInput.addEventListener("change", (event) => {
     updateRadius(event.target.value);
 });
 
 yRangeInput.addEventListener("input", (event) => {
     updateYCoordinate(event.target.value)
 });
-yInput.addEventListener("input", (event) => {
+yInput.addEventListener("change", (event) => {
     updateYCoordinate(event.target.value)
-});
-window.addEventListener('globalCoordinatesChangeByCanvas', e => {
-    isCustomX = true;
-    xCheckboxes.forEach(el => {
-        el.checked = false;
-    });
-    bgSelector.classList.add("uneven");
-    bgSelector.style.left = (window.globalX[0] / (2*window.globalR *(1/imagePartRatio))) * (100 - 100/7) + (50-50/7)  + "%";
-    updateYCoordinate(window.globalY);
 });
 
 xCheckboxes.forEach(cb => {
     cb.addEventListener('change', e => {
-        isCustomX = false;
-        bgSelector.classList.remove("uneven");
         setGlobalHitCoordinates(getXCoordinates(), window.globalY, window.globalR);
     });
-    
 });
 
 xCheckboxes[3].checked = true;

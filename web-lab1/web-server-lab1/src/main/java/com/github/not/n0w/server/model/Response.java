@@ -3,13 +3,14 @@ package com.github.not.n0w.server.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 public class Response {
     private List<Point> points;
-    private Float r;
+    private BigDecimal r;
     private Double executionTime;
     private String currentTime;
 
@@ -17,7 +18,7 @@ public class Response {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        sb.append("\"status\": \"ok\", "); // <-- кавычки и запятая
+        sb.append("\"status\": \"ok\", ");
         sb.append("\"points\": [");
         if (points != null) {
             for (int i = 0; i < points.size(); i++) {

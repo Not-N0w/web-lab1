@@ -12,8 +12,10 @@ var ctx = canvas.getContext("2d");
 var hatchLength = 10;
 let r, canvasHeight, canvasWidth;
 let tooltip = document.getElementById("tooltip");
-
 const letterHeight = hatchLength*1.5; 
+const aimPoint = new Image();
+aimPoint.src = "img/cross-svgrepo-com.svg";
+
 
 
 function resizeCanvas() {
@@ -49,7 +51,6 @@ function updateRadiusAxisText() {
     ctx.fillText(window.globalR, canvasWidth/2 + r - ctx.measureText(window.globalR).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
     ctx.fillText(-window.globalR/2, canvasWidth/2 - r/2 - ctx.measureText(-window.globalR/2).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
     ctx.fillText(-window.globalR, canvasWidth/2 - r - ctx.measureText(-window.globalR).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
-
 
     ctx.fillText(window.globalR/2, canvasWidth/2 - hatchLength/2 - ctx.measureText(window.globalR/2).width - 4, canvasHeight/2 - r/2 + letterHeight/2 - 2);
     ctx.fillText(-window.globalR/2, canvasWidth/2 - hatchLength/2 - ctx.measureText(-window.globalR/2).width - 4, canvasHeight/2 + r/2 + letterHeight/2 - 2);
@@ -104,16 +105,13 @@ function drawAxis() {
 
     ctx.closePath()
 }
-
 function drawHitPoint() {
     if(xHit != null && yHit != null) {
-        const y = canvasHeight / 2 - (r/window.globalR * yHit) ;
+        const y = canvasHeight / 2 - (r / window.globalR * yHit);
+
         xHit.forEach(xPoint => {
-            const x = r/window.globalR  * xPoint + canvasWidth / 2;
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, Math.PI * 2);
-            ctx.fillStyle = "#41f538";
-            ctx.fill(); 
+            const x = (r / window.globalR * xPoint) + canvasWidth / 2;
+            ctx.drawImage(aimPoint, x - 20, y - 20, 40, 40);
         });
     }
 }
@@ -136,60 +134,53 @@ function drawFugure() {
 
 }
 
+
+function drawHistory() {
+    for(var i = 0; i < hits.length; ++i) {
+        if(hits[i].r != window.globalR) continue;
+        const y = canvasHeight / 2 - (r / window.globalR * hits[i].y);
+        const x = (r / window.globalR * hits[i].x) + canvasWidth / 2;
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = (hits[i].isHit ? "#3ece4aff" : "#f57138ff");
+        ctx.fill(); 
+    }
+}
+
 function fillCanvas() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     resizeCanvas();
     drawFugure();
     drawAxis();
+    drawHistory();
     drawHitPoint();
 }
 
-function localCanvasPointToVirtual(x, y) {
-    const rect = canvas.getBoundingClientRect();
-    let newX = [];
-    x.forEach(el => {
-        newX.push((el - rect.left - canvasWidth/2) * (window.globalR/r))
-    });
-    const newY = (canvasHeight/2 - (y - rect.top)) * (window.globalR/r);
+canvas.addEventListener(
+    "mousemove", 
+    (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left - canvasWidth/2) * (window.globalR/r);
+        const y = (canvasHeight/2 - (event.clientY - rect.top)) * (window.globalR/r);
 
-    return { x: newX, y: newY };
-}
+        const roundedX = Math.round(x*10)/10;
+        const roundedY =  Math.round(y*10)/10;
+        tooltip.classList.remove("hidden");
+        tooltip.innerHTML = 
+            "X: " + " ".repeat(5 - roundedX.toString().length) + roundedX +
+            " Y: " + " ".repeat(5 - roundedY.toString().length) + roundedY;    
+        tooltip.style.left = event.pageX +10 + 'px';
+        tooltip.style.top  = event.pageY + 'px';
+    }
+);
 
-
-
-canvas.addEventListener("mousemove", (event) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = (event.clientX - rect.left - canvasWidth/2) * (window.globalR/r);
-    const y = (canvasHeight/2 - (event.clientY - rect.top)) * (window.globalR/r);
-
-    const roundedX = Math.round(x*10)/10;
-    const roundedY =  Math.round(y*10)/10;
-    tooltip.classList.remove("hidden");
-    tooltip.innerHTML = 
-        "X: " + " ".repeat(5 - roundedX.toString().length) + roundedX +
-        " Y: " + " ".repeat(5 - roundedY.toString().length) + roundedY;    
-    tooltip.style.left = event.pageX +10 + 'px';
-    tooltip.style.top  = event.pageY + 'px';
-});
-
-
-canvas.addEventListener("mouseleave", (event) => {
-    tooltip.classList.add("hidden")
-});
-
-//canvas.addEventListener("click", (event) => {
-//    ({ x: xHit, y: yHit } = localCanvasPointToVirtual([event.clientX], event.clientY));
-//    xHit = xHit.map(el => roundToTenth(el));
-    
-//    window.globalX = xHit;
-//    window.globalY = roundToTenth(yHit);
-//    window.dispatchEvent(new CustomEvent('globalCoordinatesChangeByCanvas', {
-//        detail: { x: xHit, y: yHit, r: window.globalR } 
-//    }));
-
-//    fillCanvas()
-//});
-
+canvas.addEventListener(
+    "mouseleave", 
+    (event) => {
+        tooltip.classList.add("hidden")
+    }
+);
 
 window.addEventListener('globalCoordinatesChange', e => {
     xHit = window.globalX
@@ -198,4 +189,7 @@ window.addEventListener('globalCoordinatesChange', e => {
 });
 
 
-fillCanvas()
+aimPoint.onload = function() {
+    fillCanvas()
+};
+

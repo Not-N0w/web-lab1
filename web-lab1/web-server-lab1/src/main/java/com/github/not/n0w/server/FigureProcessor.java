@@ -1,11 +1,24 @@
 package com.github.not.n0w.server;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class FigureProcessor {
-    public static boolean hit(float x, float y, float r) {
-        if (x >= 0 && y >= 0) return (x <= r / 2 && y <= r);
-        if (x <= 0 && y >= 0) return (y <= x + r);
-        if (x <= 0 && y <= 0) return (x * x + y * y <= r * r);
+    public static boolean hit(BigDecimal x, BigDecimal y, BigDecimal r) {
+        if (x.compareTo(BigDecimal.ZERO) >= 0 && y.compareTo(BigDecimal.ZERO) >= 0) {
+            return x.compareTo(r.divide(BigDecimal.valueOf(2), 100, RoundingMode.HALF_UP)) <= 0
+                    && y.compareTo(r) <= 0;
+        }
+
+        if (x.compareTo(BigDecimal.ZERO) <= 0 && y.compareTo(BigDecimal.ZERO) >= 0) {
+            return y.compareTo(x.add(r)) <= 0;
+        }
+
+        if (x.compareTo(BigDecimal.ZERO) <= 0 && y.compareTo(BigDecimal.ZERO) <= 0) {
+            return x.multiply(x).add(y.multiply(y)).compareTo(r.multiply(r)) <= 0;
+        }
+
         return false;
     }
 }
