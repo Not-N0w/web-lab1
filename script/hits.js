@@ -5,7 +5,6 @@ var radiusCheckbox = document.getElementById("radius-checkbox");
 var isFixedR = false;
 
 var hits = [];
-const POST_URL = "/fcgi-bin/lab1.jar"
 
 function formatCell(content, maxLength = 20, maxVisible = 5 , minEnd = 2) {
     let display = content;

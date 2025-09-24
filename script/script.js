@@ -1,6 +1,3 @@
-const rUpperBound = 10;
-const rLowerBound = 1;
-const imagePartRatio = 0.6;
 
 var rRangeInput = document.getElementById("r-range-input");
 var yRangeInput = document.getElementById("y-range-input");

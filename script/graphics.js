@@ -9,12 +9,11 @@ var xHit = [0];
 var yHit = 0;
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-var hatchLength = 10;
-let r, canvasHeight, canvasWidth;
 let tooltip = document.getElementById("tooltip");
-const letterHeight = hatchLength*1.5; 
 const aimPoint = new Image();
 aimPoint.src = "img/cross-svgrepo-com.svg";
+
+let r, canvasHeight, canvasWidth;
 
 
 
