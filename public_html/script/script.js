@@ -4,7 +4,6 @@ var yRangeInput = document.getElementById("y-range-input");
 var xCheckboxes = document.querySelectorAll('input[name="x-coordinate"]');
 var rInput = document.getElementById("r-input");
 var yInput = document.getElementById("y-input");
-var bgSelector = document.getElementById("bg-selector");
 var dialog = document.getElementById("dialog-window");
 var dialogButton = document.getElementById("got-it");
 var dialogType = document.getElementById("dialog-window-type");
@@ -76,7 +75,6 @@ function updateRadius(value) {
     rRangeInput.value = newValue;
 
     setGlobalHitCoordinates(window.globalX, window.globalY, newValue);
-    bgSelector.style.left = (window.globalX[0] / (2*window.globalR *(1/imagePartRatio))) * (100 - 100/7) + (50-50/7)  + "%";
 }
 
 
