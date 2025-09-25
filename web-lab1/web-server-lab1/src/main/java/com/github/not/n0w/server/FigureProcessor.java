@@ -7,8 +7,8 @@ import java.math.RoundingMode;
 public class FigureProcessor {
     public static boolean hit(BigDecimal x, BigDecimal y, BigDecimal r) {
         if (x.compareTo(BigDecimal.ZERO) >= 0 && y.compareTo(BigDecimal.ZERO) >= 0) {
-            return x.compareTo(r.divide(BigDecimal.valueOf(2), 100, RoundingMode.HALF_UP)) <= 0
-                    && y.compareTo(r) <= 0;
+            return y.compareTo(r.divide(BigDecimal.valueOf(2), 100, RoundingMode.HALF_UP)) <= 0
+                    && x.compareTo(r) <= 0;
         }
 
         if (x.compareTo(BigDecimal.ZERO) <= 0 && y.compareTo(BigDecimal.ZERO) >= 0) {
