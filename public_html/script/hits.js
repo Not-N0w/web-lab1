@@ -69,6 +69,10 @@ function loadHitsFromCookies() {
 }
 
 function processResponse(response) {
+    if(response==null) {
+        dropDialog("error", "Server dead");
+        return;
+    }
     if(response.status == "error") {
         dropDialog("error", response.message);
         return;
@@ -87,7 +91,7 @@ function processResponse(response) {
             }
         );
     }
-    hits.unshift(...diff.slice());
+    hits=hits.concat(diff);
     saveHitsToCookies();
     clearTable();
     updateHitsTable(hits);

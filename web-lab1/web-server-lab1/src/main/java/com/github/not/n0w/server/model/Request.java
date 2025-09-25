@@ -72,11 +72,11 @@ public class Request {
         }
 
         BigDecimal upperBound = r.negate()
-                .divide(BigDecimal.valueOf(0.7), 100,  RoundingMode.HALF_UP)
+                .divide(BigDecimal.valueOf(0.6), 2,  RoundingMode.HALF_UP)
                 .add(BigDecimal.valueOf(0.1));
 
         BigDecimal lowerBound = r
-                .divide(BigDecimal.valueOf(0.7), 100,  RoundingMode.HALF_UP)
+                .divide(BigDecimal.valueOf(0.6), 2,  RoundingMode.HALF_UP)
                 .subtract(BigDecimal.valueOf(0.1));
 
         for (BigDecimal el : x) {

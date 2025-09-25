@@ -14,6 +14,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return String.format("{\"x\": %s, \"y\": %s, \"isHit\": %s}", x, y, isHit);
+        return String.format("{\"x\": %s, \"y\": %s, \"isHit\": %s}", x.toPlainString(), y.toPlainString(), isHit);
     }
 }

@@ -54,7 +54,6 @@ function numberValidation(lowerBound, upperBound, value) {
         return 1
     }
     if(value > upperBound) {
-        console.log(upperBound)
         dropDialog("warning","Value must be lower than " + upperBound + "!<br>(Changed to " + upperBound + ")");
         return upperBound
     }
@@ -79,7 +78,6 @@ function updateRadius(value) {
 
 
 function updateYCoordinate(value) {
-    console.log(preValidation(value))
     var newValue = numberValidation(coordinateLowerBound, coordinateUpperBound, preValidation(value));
     yInput.value = newValue;
     yRangeInput.value = newValue;

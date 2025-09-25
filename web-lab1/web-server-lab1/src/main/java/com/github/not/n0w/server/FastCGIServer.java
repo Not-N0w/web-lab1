@@ -23,9 +23,10 @@ public class FastCGIServer {
     }
 
     private void dropError(String message) {
-        String sb = "{" +
-                "\"status\": " + "error" +
-                "\"message\": \"" + message + "\"";
+        String sb = "{"
+                + "\"status\": \"error\", "
+                + "\"message\": \"" + message + "\""
+                + "}";
         System.out.println(sb);
         log.error(message);
     }
