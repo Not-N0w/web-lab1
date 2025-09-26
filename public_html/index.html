@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lab1</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <table class = "main-table">
+    <table class="main-table">
         <tr>
             <th colspan=2>
                 <header>
-                    <div class = "wrapper">
-                        <div class = "header-content">
+                    <div class="wrapper">
+                        <div class="header-content">
                             <div>
                                 <h1 class="title">
                                     lab1<span> (var.466595)</span>
@@ -31,76 +33,82 @@
             <td>
                 <div class="coordinate-plate-outer">
                     <canvas id="canvas"></canvas>
-                    <div id = "tooltip" class = "hidden"></div>
+                    <div id="tooltip" class="hidden"></div>
                 </div>
             </td>
             <td>
                 <div class="hit-from-wrapper">
                     <form id="hit-form">
                         <h2>HIT</h2>
-                        <div class = "form-content-wrapper">
-                        <div class = "input-block">
-                        <div class="input-wrapper">
-                            <label for="radius">R:</label>
-                            <div>
-                                <input type="range" id="r-range-input" value="1" min="1" max="10"/>
-                                <input type="text" id="r-input" value="1" autocomplete="off">
+                        <div class="form-content-wrapper">
+                            <div class="input-block">
+                                <div class="input-wrapper">
+                                    <label for="radius">R:</label>
+                                    <div>
+                                        <input type="text" id="r-input" value="1" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <div>X:</div>
+                                    <div class="checkbox-line">
+                                        <div class="check-point">
+                                            <label for="x-input-n2">-2</label>
+                                            <input type="checkbox" id="x-input-n2" value="-2" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-n15">-1.5</label>
+                                            <input type="checkbox" id="x-input-n15" value="-1.5" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-n1">-1</label>
+                                            <input type="checkbox" id="x-input-n1" value="-1" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-n05">-0.5</label>
+                                            <input type="checkbox" id="x-input-n05" value="-0.5" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-0">0</label>
+                                            <input type="checkbox" id="x-input-0" value="0" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-05">0.5</label>
+                                            <input type="checkbox" id="x-input-05" value="0.5" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-1">1</label>
+                                            <input type="checkbox" id="x-input-1" value="1" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-15">1.5</label>
+                                            <input type="checkbox" id="x-input-15" value="1.5" name="x-coordinate">
+                                        </div>
+                                        <div class="check-point">
+                                            <label for="x-input-2">2</label>
+                                            <input type="checkbox" id="x-input-2" value="2" name="x-coordinate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="y-range-input">Y:</label>
+                                    <div>
+                                        <input type="text" id="y-input" value="0" step="0.1" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="submit" value="HIT!" id="hit-button">
                             </div>
                         </div>
-                        <div class="input-wrapper">
-                            <div>X:</div>
-                            <div class = "checkbox-line">
-                                <div class="check-point">
-                                <label for="x-input-n3">-3</label>
-                                <input type="checkbox" id="x-input-n3" value="-3" name="x-coordinate">
-                                </div>
-                                <div class="check-point">
-                                <label for="x-input-n2">-2</label>
-                                <input type="checkbox" id="x-input-n2" value="-2" name="x-coordinate">
-                                </div>
-                                <div class="check-point">
-                                <label for="x-input-n1">-1</label>
-                                <input type="checkbox" id="x-input-n1" value="-1" name="x-coordinate">
-                                </div>
-                                <div class="check-point">
-                                <label for="x-input-0">0</label>
-                                <input type="checkbox" id="x-input-0" value="0" name="x-coordinate">
-                                </div>
-                                <div class="check-point">
-                                <label for="x-input-1">1</label>
-                                <input type="checkbox" id="x-input-1" value="1" name="x-coordinate">
-                                </div>
-                                <div class="check-point">
-                                <label for="x-input-2">2</label>
-                                <input type="checkbox" id="x-input-2" value="2" name="x-coordinate">
-                                </div>
-                                <div class="check-point">
-                                <label for="x-input-3">3</label>
-                                <input type="checkbox" id="x-input-3" value="3" name="x-coordinate">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="y-range-input">Y:</label>
-                            <div>
-                                <input type="range" id="y-range-input" value="0" step="0.1"/>
-                                <input type="text" id="y-input" value="0" step="0.1" autocomplete="off">
-                            </div>
-                        </div>
-                        </div>
-                         <div class ="input-wrapper">
-                              <input type="submit" value="HIT!" id="hit-button">
-                        </div>
-                        </div>
-                        
+
                     </form>
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan="2" class="history-table-outer">
-                <table class = "history-table" id="hits-table">
-                    <tr class = "head">
+                <table class="history-table" id="hits-table">
+                    <tr class="head">
                         <th>X</th>
                         <th>Y</th>
                         <th>R</th>
@@ -110,7 +118,7 @@
                     </tr>
                 </table>
                 <button id="clear-button" title="Clear hits history">
-                    <div class ="image-holder"></div>
+                    <div class="image-holder"></div>
                 </button>
                 <div class="check-point">
                     <input type="checkbox" id="radius-checkbox" title="Show hits only with current radius"></input>
@@ -129,11 +137,12 @@
             <button id="got-it" onClick="hideDialog()">Got it!</button>
         </div>
     </div>
-    <div class ="blocker"></div>
+    <div class="blocker"></div>
 
-  <script src="script/const.js"></script>
-  <script src="script/script.js"></script>
-  <script src="script/hits.js"></script>
-  <script src="script/graphics.js"></script>
+    <script src="script/const.js"></script>
+    <script src="script/script.js"></script>
+    <script src="script/hits.js"></script>
+    <script src="script/graphics.js"></script>
 </body>
+
 </html>

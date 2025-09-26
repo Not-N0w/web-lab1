@@ -1,6 +1,3 @@
-
-var rRangeInput = document.getElementById("r-range-input");
-var yRangeInput = document.getElementById("y-range-input");
 var xCheckboxes = document.querySelectorAll('input[name="x-coordinate"]');
 var rInput = document.getElementById("r-input");
 var yInput = document.getElementById("y-input");
@@ -8,8 +5,8 @@ var dialog = document.getElementById("dialog-window");
 var dialogButton = document.getElementById("got-it");
 var dialogType = document.getElementById("dialog-window-type");
 var dialogText = document.getElementById("dialog-window-text");
-var coordinateUpperBound;
-var coordinateLowerBound;
+var yUpperBound = 5;
+var yLowerBound = -5;
 
 
 
@@ -18,31 +15,11 @@ function roundToTenth(value) {
 }
 
 function updateCoordsRestrictions() {
-    coordinateLowerBound = roundToTenth(-window.globalR * (1/imagePartRatio - 0.2));
-    coordinateUpperBound = roundToTenth(window.globalR * (1/imagePartRatio - 0.2));
+    yInput.value = (yInput.value > yUpperBound ? yUpperBound : yInput.value);
+    yInput.value = (yInput.value < yLowerBound ? yLowerBound : yInput.value);
 
-    yRangeInput.max = coordinateUpperBound;
-    yRangeInput.min = coordinateLowerBound;
-    yInput.max = coordinateUpperBound;
-    yInput.min = coordinateLowerBound;
-
-    yInput.value = (yInput.value > coordinateUpperBound ? coordinateUpperBound : yInput.value);
-    yInput.value = (yInput.value < coordinateLowerBound ? coordinateLowerBound : yInput.value);
-    
-    window.globalY = (yInput.value > coordinateUpperBound ? coordinateUpperBound : yInput.value);
-    window.globalY = (yInput.value < coordinateLowerBound ? coordinateLowerBound : yInput.value);
-
-    for(let i = 0; i < window.globalX.length; ++i) {
-        window.globalX[i] = (window.globalX[i] < coordinateLowerBound ? coordinateLowerBound : window.globalX[i]);
-        window.globalX[i] = (window.globalX[i] >  coordinateUpperBound ? coordinateUpperBound : window.globalX[i]);
-    }
-
-    const xValues = [-window.globalR *1.5, -window.globalR, -window.globalR/2, 0, window.globalR/2, window.globalR, window.globalR * 1.5]
-    for(let i = 0; i < xValues.length; ++i) {
-        xCheckboxes[i].value = Math.round(xValues[i]*10)/10;
-        const label = document.querySelector(`label[for="${xCheckboxes[i].id}"]`);
-        label.innerHTML=Math.round(xValues[i]*10)/10;
-    }
+    window.globalY = (yInput.value > yUpperBound ? yUpperBound : yInput.value);
+    window.globalY = (yInput.value < yLowerBound ? yLowerBound : yInput.value);
 }
 function preValidation(value) {
     return value.replace(/,/g, ".").trim();
@@ -65,22 +42,15 @@ function numberValidation(lowerBound, upperBound, value) {
 }
 
 function updateRadius(value) {
-    var newValue = numberValidation(rLowerBound, rUpperBound, preValidation(value));
-    if(/[.,]/.test(value)) {
-        newValue = Math.round(preValidation(value)) == NaN ? Math.round(preValidation(value)) : 1
-        dropDialog("warning", "Value must be integer! <br>(Changed to "+newValue+")");
-    }
-    rInput.value = newValue;   
-    rRangeInput.value = newValue;
-
+    var newValue = numberValidation(1, 4, preValidation(value));
+    rInput.value = newValue;
     setGlobalHitCoordinates(window.globalX, window.globalY, newValue);
 }
 
 
 function updateYCoordinate(value) {
-    var newValue = numberValidation(coordinateLowerBound, coordinateUpperBound, preValidation(value));
+    var newValue = numberValidation(yLowerBound, yUpperBound, preValidation(value));
     yInput.value = newValue;
-    yRangeInput.value = newValue;
     setGlobalHitCoordinates(window.globalX, newValue, window.globalR);
 }
 
@@ -119,16 +89,11 @@ function hideDialog() {
 }
 
 
-rRangeInput.addEventListener("input", (event) => {
-    updateRadius(event.target.value);
-});
+
 rInput.addEventListener("change", (event) => {
     updateRadius(event.target.value);
 });
 
-yRangeInput.addEventListener("input", (event) => {
-    updateYCoordinate(event.target.value)
-});
 yInput.addEventListener("change", (event) => {
     updateYCoordinate(event.target.value)
 });
@@ -139,7 +104,7 @@ xCheckboxes.forEach(cb => {
     });
 });
 
-xCheckboxes[3].checked = true;
+xCheckboxes[4].checked = true;
 setGlobalHitCoordinates([0], 0, 1)
 
 

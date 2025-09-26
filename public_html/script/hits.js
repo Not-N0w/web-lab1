@@ -48,25 +48,58 @@ function updateHitsTable(diff) {
     });
 }
 
+function clearHitsCookies() {
+  const cookies = document.cookie.split("; ");
 
+  cookies.forEach(c => {
+    const name = c.split("=")[0].trim();
+    if (name.startsWith("hits_part_")) {
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    }
+  });
+}
 function saveHitsToCookies() {
-    const json = JSON.stringify(hits);
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
-    document.cookie = `hits=${encodeURIComponent(json)}; expires=${expires}; path=/`;
+  const json = JSON.stringify(hits);
+  const encoded = btoa(unescape(encodeURIComponent(json)));
+  const chunkSize = 3500;
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+
+  const cookies = document.cookie.split("; ");
+  cookies.forEach(c => {
+    if (c.trim().startsWith("hits_part_")) {
+      const name = c.split("=")[0].trim();
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    }
+  });
+
+  for (let i = 0, part = 0; i < encoded.length; i += chunkSize, part++) {
+    const chunk = encoded.slice(i, i + chunkSize);
+    document.cookie = `hits_part_${part}=${chunk}; expires=${expires}; path=/`;
+  }
 }
 
 function loadHitsFromCookies() {
-    const cookies = document.cookie.split(';').map(c => c.trim());
-    const hitCookie = cookies.find(c => c.startsWith('hits='));
-    if (hitCookie) {
-        try {
-            hits = JSON.parse(decodeURIComponent(hitCookie.split('=')[1]));
-            updateHitsTable(hits);
-        } catch (e) {
-            hits = [];
-        }
+  const cookies = document.cookie.split("; ");
+  const parts = [];
+
+  cookies.forEach(c => {
+    c = c.trim();
+    if (c.startsWith("hits_part_")) {
+      const [name, ...rest] = c.split("=");
+      const value = rest.join("=");
+      const index = parseInt(name.replace("hits_part_", ""), 10);
+      parts[index] = value || "";
     }
+  });
+
+  const encoded = parts.join("");
+  if (!encoded) return [];
+
+  const json = decodeURIComponent(escape(atob(encoded)));
+  return JSON.parse(json);
 }
+
+
 
 function processResponse(response) {
     if(response==null) {
@@ -141,7 +174,7 @@ hitForm.addEventListener('submit', async function (event) {
 
 clearButton.addEventListener("click", (event) => {
     hits = []
-    document.cookie = "hits=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    clearHitsCookies();
 
     clearTable()
     window.dispatchEvent(new CustomEvent('globalCoordinatesChange', {
@@ -163,4 +196,8 @@ window.addEventListener('globalCoordinatesChange', e => {
 });
 
 
-loadHitsFromCookies();
+hits=loadHitsFromCookies();
+updateHitsTable(hits);
+window.dispatchEvent(new CustomEvent('globalCoordinatesChange', {
+    detail: { x: window.globalX, y: window.globalY, r: window.globalR } 
+}));

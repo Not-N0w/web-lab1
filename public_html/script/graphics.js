@@ -4,7 +4,6 @@ const color_red_bright = styles.getPropertyValue("--color-bright-red").trim();
 const color_red = styles.getPropertyValue("--color-red").trim();
 const color_light = styles.getPropertyValue("--color-light").trim();
 
-
 var xHit = [0];
 var yHit = 0;
 var canvas = document.getElementById("canvas");
@@ -46,15 +45,15 @@ function drawLine(x1, y1, x2, y2) {
 
 function updateRadiusAxisText() {
 
-    ctx.fillText(window.globalR/2, canvasWidth/2 + r/2 - ctx.measureText(window.globalR/2).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
-    ctx.fillText(window.globalR, canvasWidth/2 + r - ctx.measureText(window.globalR).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
-    ctx.fillText(-window.globalR/2, canvasWidth/2 - r/2 - ctx.measureText(-window.globalR/2).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
-    ctx.fillText(-window.globalR, canvasWidth/2 - r - ctx.measureText(-window.globalR).width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
+    ctx.fillText("R/2", canvasWidth/2 + r/2 - ctx.measureText("R/2").width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
+    ctx.fillText("R", canvasWidth/2 + r - ctx.measureText("R").width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
+    ctx.fillText("-R/2", canvasWidth/2 - r/2 - ctx.measureText("-R/2").width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
+    ctx.fillText("-R", canvasWidth/2 - r - ctx.measureText("-R").width/2, canvasHeight/2 + hatchLength/2 + letterHeight);
 
-    ctx.fillText(window.globalR/2, canvasWidth/2 - hatchLength/2 - ctx.measureText(window.globalR/2).width - 4, canvasHeight/2 - r/2 + letterHeight/2 - 2);
-    ctx.fillText(-window.globalR/2, canvasWidth/2 - hatchLength/2 - ctx.measureText(-window.globalR/2).width - 4, canvasHeight/2 + r/2 + letterHeight/2 - 2);
-    ctx.fillText(window.globalR, canvasWidth/2 - hatchLength/2 - ctx.measureText(window.globalR).width - 4, canvasHeight/2 - r + letterHeight/2 - 2);
-    ctx.fillText(-window.globalR, canvasWidth/2 - hatchLength/2 - ctx.measureText(-window.globalR).width - 4, canvasHeight/2 + r + letterHeight/2 - 2);
+    ctx.fillText("R/2", canvasWidth/2 - hatchLength/2 - ctx.measureText("R/2").width - 4, canvasHeight/2 - r/2 + letterHeight/2 - 2);
+    ctx.fillText("-R/2", canvasWidth/2 - hatchLength/2 - ctx.measureText("-R/2").width - 4, canvasHeight/2 + r/2 + letterHeight/2 - 2);
+    ctx.fillText("R", canvasWidth/2 - hatchLength/2 - ctx.measureText("R").width - 4, canvasHeight/2 - r + letterHeight/2 - 2);
+    ctx.fillText("-R", canvasWidth/2 - hatchLength/2 - ctx.measureText("-R").width - 4, canvasHeight/2 + r + letterHeight/2 - 2);
 
 }
 
@@ -107,10 +106,9 @@ function drawAxis() {
 function drawHitPoint() {
     if(xHit != null && yHit != null) {
         const y = canvasHeight / 2 - (r / window.globalR * yHit);
-
         xHit.forEach(xPoint => {
             const x = (r / window.globalR * xPoint) + canvasWidth / 2;
-            ctx.drawImage(aimPoint, x - 20, y - 20, 40, 40);
+            ctx.drawImage(aimPoint, x - 10, y - 10, 20, 20);
         });
     }
 }
@@ -135,6 +133,7 @@ function drawFugure() {
 
 
 function drawHistory() {
+
     for(var i = 0; i < hits.length; ++i) {
         if(hits[i].r != window.globalR) continue;
         const y = canvasHeight / 2 - (r / window.globalR * hits[i].y);
