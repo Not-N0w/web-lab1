@@ -27,7 +27,7 @@ public class Response {
             }
         }
         sb.append("], ");
-        sb.append("\"r\": ").append(r != null ? r : "null").append(", ");
+        sb.append("\"r\": ").append(r != null ? "\""+r+"\"" : "null").append(", ");
         sb.append("\"executionTime\": ").append(executionTime != null ? executionTime : "null").append(", ");
         sb.append("\"currentTime\": \"").append(currentTime != null ? currentTime : "").append("\"");
         sb.append("}");
