@@ -84,7 +84,8 @@ header .header-content .title {
     color: var(--color-bright-red);
     font-weight: 600;
 }
-header .header-content .title>span {
+header .header-content .title::after {
+    content: "(var.466595)";
     color: var(--color-light);
     font-weight: 200;
     font-size: small;

@@ -71,21 +71,28 @@ public class Request {
             throw new IllegalArgumentException("Request fields must not be null");
         }
 
-        BigDecimal upperBound = r.negate()
-                .divide(BigDecimal.valueOf(0.6), 2,  RoundingMode.HALF_UP)
-                .add(BigDecimal.valueOf(0.1));
+        BigDecimal upperBound = BigDecimal.valueOf(5);
+        BigDecimal lowerBound = BigDecimal.valueOf(-5);
 
-        BigDecimal lowerBound = r
-                .divide(BigDecimal.valueOf(0.6), 2,  RoundingMode.HALF_UP)
-                .subtract(BigDecimal.valueOf(0.1));
+        List<BigDecimal> xValues =  List.of(
+                BigDecimal.valueOf(-2),
+                BigDecimal.valueOf(-1.5),
+                BigDecimal.valueOf(-1),
+                BigDecimal.valueOf(-0.5),
+                BigDecimal.valueOf(0),
+                BigDecimal.valueOf(0.5),
+                BigDecimal.valueOf(1),
+                BigDecimal.valueOf(1.5),
+                BigDecimal.valueOf(2)
+        );
 
         for (BigDecimal el : x) {
-            if (el.compareTo(upperBound) < 0 || el.compareTo(lowerBound) > 0) {
+            if(!xValues.contains(el)) {
                 throw new IllegalArgumentException("Invalid value of x: '" + el + "'");
             }
         }
 
-        if (y.compareTo(upperBound) < 0 || y.compareTo(lowerBound) > 0) {
+        if (y.compareTo(lowerBound) < 0 || y.compareTo(upperBound) > 0) {
             throw new IllegalArgumentException("Invalid value of y: '" + y + "'");
         }
     }

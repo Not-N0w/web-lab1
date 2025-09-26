@@ -69,7 +69,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.web-server.executor&quot;: &quot;Debug&quot;,
     &quot;Gradle.Build web-server-lab1.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.web-server-lab1 [:com.github.not.n0w.Main.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.web-server-lab1 [:com.github.not.n0w.Main.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.web-server-lab1 [build].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.web-server-lab1 [clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.web-server-lab1 [jar].executor&quot;: &quot;Run&quot;,
@@ -96,7 +96,7 @@
       <recent name="C:\Users\YAROSLAV\Desktop\2\web\lab1\web-lab1\web-server-lab1" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.web-server-lab1 [jar]">
+  <component name="RunManager" selected="Application.web-server">
     <configuration name="web-server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.github.not.n0w.Main" />
       <module name="web-server-lab1.main" />
@@ -206,7 +206,7 @@
       <workItem from="1758120123136" duration="16193000" />
       <workItem from="1758225376929" duration="16066000" />
       <workItem from="1758468940206" duration="18000" />
-      <workItem from="1758616681632" duration="23319000" />
+      <workItem from="1758616681632" duration="24801000" />
     </task>
     <task id="LOCAL-00001" summary="FCGI java server">
       <option name="closed" value="true" />
@@ -225,5 +225,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="FCGI java server" />
     <option name="LAST_COMMIT_MESSAGE" value="FCGI java server" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/not/n0w/server/FastCGIServer.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="y.compareTo(upperBound)" language="JAVA" />
+        <watch expression="y.compareTo(lowerBound)" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
